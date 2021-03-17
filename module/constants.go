@@ -1,4 +1,4 @@
-package model
+package module
 
 const (
 	PERSONALALGO string = "personal"

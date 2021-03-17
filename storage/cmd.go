@@ -1,9 +1,10 @@
 package storage
 
 import (
-	. "../util"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
+	// "recommend/util"
+	"log"
 )
 
 func (r RedisInstance) Exists(pat string) (res bool, err error) {
@@ -76,7 +77,7 @@ func (r RedisInstance) Hmget(key string, fields []string) (res []string, err err
 		newfields[i+1] = v
 	}
 	res, err = redis.Strings(r.do("HMGET", newfields...))
-	Debugln("hmget\t", newfields, "\tres", res, "\terr", err)
+	log.Println("hmget\t", newfields, "\tres", res, "\terr", err)
 	return
 }
 
@@ -87,7 +88,7 @@ func (r RedisInstance) hgetAll(key string) (res map[string]string, err error) {
 		}
 	}()
 	res, err = redis.StringMap(r.do("HGETALL", key))
-	//Debugln("hgetAll", key, res, err)
+	//log.Println("hgetAll", key, res, err)
 	return
 }
 
@@ -148,7 +149,7 @@ func (r RedisInstance) ZADD(key string, fields []interface{}) (res int64, err er
 		newfields[i+1] = v
 	}
 	res, err = redis.Int64(r.do("ZADD", newfields...))
-	Debugln("WZADD\t", newfields, "\tres", res, "\terr", err)
+	log.Println("WZADD\t", newfields, "\tres", res, "\terr", err)
 	return
 }
 
@@ -203,7 +204,7 @@ func (r RedisInstance) Hincrby(key string, fields []interface{}) (res int64, err
 		newfields[i+1] = v
 	}
 	res, err = redis.Int64(r.do("HINCRBY", newfields...))
-	Debugln("WHincrby\t", newfields, "\tres", res, "\terr", err)
+	log.Println("WHincrby\t", newfields, "\tres", res, "\terr", err)
 	return
 }
 
@@ -219,7 +220,7 @@ func (r RedisInstance) HMGET(key string, fields []string) (res []string, err err
 		newfields[i+1] = v
 	}
 	res, err = redis.Strings(r.do("HMGET", newfields...))
-	Debugln("WHMGET\t", newfields, "\tres", res, "\terr", err)
+	log.Println("WHMGET\t", newfields, "\tres", res, "\terr", err)
 	return
 }
 func (r RedisInstance) HMSET(key string, fields []string) (res string, err error) {
@@ -234,7 +235,7 @@ func (r RedisInstance) HMSET(key string, fields []string) (res string, err error
 		newfields[i+1] = v
 	}
 	res, err = redis.String(r.do("HMSET", newfields...))
-	Debugln("WHMSET\t", newfields, "\tres", res, "\terr", err)
+	log.Println("WHMSET\t", newfields, "\tres", res, "\terr", err)
 	return
 }
 
@@ -245,7 +246,7 @@ func (r RedisInstance) Expire(key string, expire_sec int) (res bool, err error) 
 		}
 	}()
 	res, err = redis.Bool(r.do("expire", key, expire_sec))
-	Debugln("WExpire\t", key, "\t", expire_sec, "\tres", res, "\terr", err)
+	log.Println("WExpire\t", key, "\t", expire_sec, "\tres", res, "\terr", err)
 	return
 }
 
@@ -262,7 +263,7 @@ func (r RedisInstance) Eval(lua_script string, keycount int, fields []interface{
 	}
 
 	res, err = r.doScript(lua_script, keycount, newfields...)
-	Debugln("eval\t", lua_script, "\t", keycount, "\tres", res, "\terr", err)
+	log.Println("eval\t", lua_script, "\t", keycount, "\tres", res, "\terr", err)
 	return
 }
 

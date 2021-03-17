@@ -1,35 +1,35 @@
 package query
 
 import (
-	. "../../model"
-	"../../storage"
-	. "../../util"
+	"recommend/module"
+	"recommend/storage"
+	"recommend/util"
 	"time"
 )
 
-func qArticleFromES(channel string, ids []string) (al []*Article) {
-	if channel == HOMECHANNEL {
+func qArticleFromES(channel string, ids []string) (al []*module.Article) {
+	if channel == module.HOMECHANNEL {
 		return getDataByIds(ids)
-	} else if channel == HOTVIDEOCHANNEL {
+	} else if channel == module.HOTVIDEOCHANNEL {
 		return getDataByIds4video(ids)
 	}
 	return
 }
 
-func QueryArticleByIds(channel string, ids []string) []*Article {
+func QueryArticleByIds(channel string, ids []string) []*module.Article {
 	//获取id给定的合法article
-	var data []*Article
+	var data []*module.Article
 	idsmap := make(map[string]bool)
 
 	// first find in cache, if channel is "", then find all cache
 	if channel == "" {
-		data = qArticleFromCache(HOMECHANNEL, ids)
-		data2 := qArticleFromCache(HOTVIDEOCHANNEL, ids)
+		data = qArticleFromCache(module.HOMECHANNEL, ids)
+		data2 := qArticleFromCache(module.HOTVIDEOCHANNEL, ids)
 		data = append(data, data2...)
 	} else {
 		data = qArticleFromCache(channel, ids)
 	}
-	Infoln("xzhaodebugxxx lendata", len(data))
+	util.Infoln("debugxxx lendata", len(data))
 
 	// second find is es
 	resids := make([]string, 0)
@@ -41,15 +41,15 @@ func QueryArticleByIds(channel string, ids []string) []*Article {
 			resids = append(resids, i)
 		}
 	}
-	Infoln("xzhaodebugxxx lenresid", len(resids))
+	util.Infoln("debugxxx lenresid", len(resids))
 
 	if channel == "" {
-		data1 := qArticleFromES(HOMECHANNEL, resids)
-		Infoln("xzhaodebugxxx lenresid1: ", len(data1))
+		data1 := qArticleFromES(module.HOMECHANNEL, resids)
+		util.Infoln("debugxxx lenresid1: ", len(data1))
 
 		data = append(data, data1...)
-		data2 := qArticleFromES(HOTVIDEOCHANNEL, resids)
-		Infoln("xzhaodebugxxx lenresid2: ", len(data2))
+		data2 := qArticleFromES(module.HOTVIDEOCHANNEL, resids)
+		util.Infoln("debugxxx lenresid2: ", len(data2))
 
 		data = append(data, data2...)
 	} else {
@@ -59,17 +59,17 @@ func QueryArticleByIds(channel string, ids []string) []*Article {
 	return data
 }
 
-func QueryArticleForTags(ids []string) []Article {
+func QueryArticleForTags(ids []string) []module.Article {
 	//缓存article以供personal， merge， template快速调用, 仅供计算tags使用， 允许下架等不合法article存在
 	//注意cache中的article可能已经不合法
-	artlist := make([]Article, 0)
+	artlist := make([]module.Article, 0)
 	resids := make([]string, 0)
 	for _, i := range ids {
-		val, found := storage.FetchCacheContent(ACTICLETAGSKEY + ":" + string(i))
+		val, found := storage.FetchCacheContent(module.ACTICLETAGSKEY + ":" + string(i))
 		if !found {
 			resids = append(resids, i)
 		} else {
-			artlist = append(artlist, val.(Article))
+			artlist = append(artlist, val.(module.Article))
 		}
 	}
 	if len(resids) == 0 {
@@ -78,17 +78,17 @@ func QueryArticleForTags(ids []string) []Article {
 	resdata := QueryArticleByIds("", resids)
 
 	for _, art := range resdata {
-		var a Article = *art
-		storage.SetCacheContent(ACTICLETAGSKEY+":"+art.GetId(), a, storage.MAXEXPIRATION)
+		var a module.Article = *art
+		storage.SetCacheContent(module.ACTICLETAGSKEY+":"+art.GetId(), a, storage.MAXEXPIRATION)
 		artlist = append(artlist, a)
 	}
 
 	return artlist
 }
 
-func QueryNewArticles(st Stgy, filterids []string, size int) []*Article {
+func QueryNewArticles(st module.Stgy, filterids []string, size int) []*module.Article {
 	data := qFromCache(st.GetChannel())
-	newdata := make([]*Article, 0)
+	newdata := make([]*module.Article, 0)
 	filterMap := make(map[string]bool)
 	for _, f := range filterids {
 		filterMap[f] = true
@@ -113,7 +113,7 @@ func QueryNewArticles(st Stgy, filterids []string, size int) []*Article {
 	return newdata
 }
 
-func QueryRecArticles(st Stgy, filterids []string, size int) []*Article {
+func QueryRecArticles(st module.Stgy, filterids []string, size int) []*module.Article {
 	data := qFromCache(st.GetChannel())
 	// 准备用户画像词, 优先召回符合画像词内容
 	var history_usertag = st.History_usertag
@@ -127,7 +127,7 @@ func QueryRecArticles(st Stgy, filterids []string, size int) []*Article {
 		tagmap[k] = true
 	}
 
-	newdata := make([]*Article, 0)
+	newdata := make([]*module.Article, 0)
 	filterMap := make(map[string]bool)
 	for _, f := range filterids {
 		filterMap[f] = true
@@ -168,7 +168,7 @@ func QueryRecArticles(st Stgy, filterids []string, size int) []*Article {
 		}
 	}
 	if j <= size { //若画像词相关内容不够数量, 则以其余内容补上
-		Infoln("usertag article smaller than size: ", j)
+		util.Infoln("usertag article smaller than size: ", j)
 		for _, v := range data {
 			if _, ok := filterMap[v.GetId()]; ok {
 				continue
@@ -184,7 +184,7 @@ func QueryRecArticles(st Stgy, filterids []string, size int) []*Article {
 			}
 		}
 	} else {
-		Debugln("usertag article bigger than size: ", j)
+		util.Debugln("usertag article bigger than size: ", j)
 	}
 	return newdata
 }

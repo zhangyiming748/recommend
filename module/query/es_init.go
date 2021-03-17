@@ -1,7 +1,7 @@
 package query
 
 import (
-	. "../../util"
+	. "recommend/util"
 	"fmt"
 	elastic  "github.com/olivere/elastic"
 	"strings"

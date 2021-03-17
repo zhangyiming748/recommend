@@ -1,11 +1,11 @@
 package recommend
 
 import (
-	. "../../util"
+	"recommend/util"
 )
 
 var MaxTraffic uint64
-var TrafficCtrl AtomicUint64
+var TrafficCtrl util.AtomicUint64
 
 func trafficBegin() {
 	TrafficCtrl.Add(1)

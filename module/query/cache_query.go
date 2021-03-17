@@ -1,9 +1,9 @@
 package query
 
 import (
-	. "../../model"
-	"../../storage"
-	. "../../util"
+	. "recommend/module"
+	"recommend/storage"
+	. "recommend/util"
 	"time"
 )
 

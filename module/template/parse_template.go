@@ -1,7 +1,7 @@
 package template
 
 import (
-	. "../../util"
+	. "recommend/util"
 	"encoding/json"
 	"strings"
 	//	"strconv"

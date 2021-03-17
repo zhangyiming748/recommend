@@ -1,9 +1,9 @@
 package template
 
 import (
-	. "../../model"
-	"../../storage"
-	. "../../util"
+	. "recommend/module"
+	"recommend/storage"
+	. "recommend/util"
 	"fmt"
 )
 

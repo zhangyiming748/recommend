@@ -1,9 +1,9 @@
 package usercf
 
 import (
-	. "../../model"
-	. "../../util"
-	"../query"
+	. "recommend/module"
+	. "recommend/util"
+	"recommend/module/query"
 	"encoding/json"
 	"errors"
 	"fmt"

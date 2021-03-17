@@ -1,8 +1,8 @@
 package query
 
 import (
-	. "../../model"
-	. "../../util"
+	. "recommend/module"
+	. "recommend/util"
 	"context"
 	"encoding/json"
 	//"fmt"

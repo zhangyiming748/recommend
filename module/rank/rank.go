@@ -1,7 +1,6 @@
 package rank
 
 import (
-
 	"fmt"
 	"math"
 	"recommend/module"
@@ -34,7 +33,7 @@ type score struct {
 	finalscore float64
 }
 
-func nfbscore(nfb_list []string, data []*model.Article) (scoremap map[string]float64) {
+func nfbscore(nfb_list []string, data []*module.Article) (scoremap map[string]float64) {
 	scoremap = make(map[string]float64)
 	var nl []string
 	if len(nfb_list) > COMPUTE_NFB_MAXLEN {
@@ -45,7 +44,7 @@ func nfbscore(nfb_list []string, data []*model.Article) (scoremap map[string]flo
 
 	NFBArticle := query.QueryArticleForTags(nl)
 
-	nfbscorehelper := func(art *Article) float64 {
+	nfbscorehelper := func(art *module.Article) float64 {
 		var ns float64 = 0.0
 		for _, nart := range NFBArticle {
 			for _, ntag := range nart.GetTags() {
@@ -73,7 +72,7 @@ func nfbscore(nfb_list []string, data []*model.Article) (scoremap map[string]flo
 	return
 
 }
-func hotclickscore(data []*model.Article) (scoremap map[string]float64) {
+func hotclickscore(data []*module.Article) (scoremap map[string]float64) {
 	scoremap = make(map[string]float64)
 	//https://www.cnblogs.com/zhiji6/p/6509770.html
 	r := storage.GetRedis(storage.ARTICLECLICK_KEY)
@@ -92,7 +91,7 @@ func hotclickscore(data []*model.Article) (scoremap map[string]float64) {
 		p, _ := strconv.Atoi(clicks[i])
 		t, err := strconv.ParseFloat(art.GetDatpublis(), 64)
 		if err != nil {
-			Errorln(err)
+			util.Errorln(err)
 			continue
 		}
 		// convert t to publish hours till now
@@ -106,7 +105,7 @@ func hotclickscore(data []*model.Article) (scoremap map[string]float64) {
 	return scoremap
 }
 
-func tagscore(usertag map[string]float64, art *Article) float64 {
+func tagscore(usertag map[string]float64, art *module.Article) float64 {
 	var hs float64 = 0.0
 	for k, v := range usertag {
 		if k == art.GetLargeclass() {
@@ -131,7 +130,7 @@ func tagscore(usertag map[string]float64, art *Article) float64 {
 	return hs
 }
 
-func rank(st Stgy, data []*Article, formula string, abtest string) (sortdata []*Article) {
+func rank(st module.Stgy, data []*module.Article, formula string, abtest string) (sortdata []*module.Article) {
 	var history_usertag = st.History_usertag
 	var realtime_usertag = st.Realtime_usertag
 
@@ -164,7 +163,7 @@ func rank(st Stgy, data []*Article, formula string, abtest string) (sortdata []*
 		}
 
 		s.scores = iscore
-		Debugln(iscore)
+		util.Debugln(iscore)
 		scorelist = append(scorelist, s)
 	}
 
@@ -187,7 +186,7 @@ func rank(st Stgy, data []*Article, formula string, abtest string) (sortdata []*
 			}
 		}
 	}
-	Debugln(maxscore, minscore)
+	util.Debugln(maxscore, minscore)
 	//3. normalized and sort
 	wei := weights[formula+"_"+strings.ToUpper(abtest)]
 	for i, s := range scorelist {
@@ -210,7 +209,7 @@ func rank(st Stgy, data []*Article, formula string, abtest string) (sortdata []*
 				s.finalscore += wei[w] * smap[w]
 			}
 		}
-		Debugln(abtest, smap, wei, s.finalscore)
+		util.Debugln(abtest, smap, wei, s.finalscore)
 		scorelist[i].scores = smap
 		scorelist[i].finalscore = s.finalscore
 	}
@@ -220,16 +219,16 @@ func rank(st Stgy, data []*Article, formula string, abtest string) (sortdata []*
 		return scorelist[i].finalscore > scorelist[j].finalscore
 	})
 
-	Debugln(scorelist)
-	sortdata = make([]*Article, len(data))
+	util.Debugln(scorelist)
+	sortdata = make([]*module.Article, len(data))
 	for i, s := range scorelist {
-		var art Article
+		var art module.Article
 		art = *data[s.idx]
 		sortdata[i] = &art
 		sortdata[i].Finalscore = s.finalscore
 		sortdata[i].Computescore = s.scores
 		sortdata[i].Servertag = formula
-		Debugln(sortdata[i])
+		util.Debugln(sortdata[i])
 	}
 	return sortdata
 }
@@ -257,7 +256,7 @@ func WeightsInit() {
 				fmt.Sscanf(v, "%f", &val)
 				weights[m][k] = val
 			}
-			Infoln(m, weights[m])
+			util.Infoln(m, weights[m])
 		}
 	}
 }
@@ -266,7 +265,7 @@ func init() {
 	WeightsInit()
 }
 
-func rankSimilar(article Article, data []*Article, formula string) (sortdata []*Article) {
+func rankSimilar(article module.Article, data []*module.Article, formula string) (sortdata []*module.Article) {
 	small := article.GetSmallclass()
 	medium := article.GetMediumclass()
 	large := article.GetLargeclass()
@@ -293,7 +292,7 @@ func rankSimilar(article Article, data []*Article, formula string) (sortdata []*
 		if t, err := strconv.ParseFloat(art.GetDatpublis(), 64); err == nil {
 			iscore[PUBLISH] = float64(t)
 		} else {
-			Errorln(err)
+			util.Errorln(err)
 		}
 		iscore[SIMILAR] = tagscore(tagsMap, art)
 		s.scores = iscore
@@ -319,7 +318,7 @@ func rankSimilar(article Article, data []*Article, formula string) (sortdata []*
 			}
 		}
 	}
-	Debugln(maxscore, minscore)
+	util.Debugln(maxscore, minscore)
 
 	//3.
 	wei := weights[formula+"_A"]
@@ -353,16 +352,16 @@ func rankSimilar(article Article, data []*Article, formula string) (sortdata []*
 		return scorelist[i].finalscore > scorelist[j].finalscore
 	})
 
-	Debugln(scorelist)
-	sortdata = make([]*Article, len(data))
+	util.Debugln(scorelist)
+	sortdata = make([]*module.Article, len(data))
 	for i, s := range scorelist {
-		var art Article
+		var art module.Article
 		art = *data[s.idx]
 		sortdata[i] = &art
 		sortdata[i].Finalscore = s.finalscore
 		sortdata[i].Computescore = s.scores
 		sortdata[i].Servertag = formula
-		Debugf("similar and sort list :%v", sortdata[i])
+		util.Debugf("similar and sort list :%v", sortdata[i])
 	}
 	return sortdata
 }

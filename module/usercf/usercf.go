@@ -1,8 +1,8 @@
 package usercf
 
 import (
-	"../../storage"
-	. "../../util"
+	"recommend/storage"
+	. "recommend/util"
 	"encoding/json"
 	"sort"
 	"strconv"
