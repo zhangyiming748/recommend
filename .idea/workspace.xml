@@ -19,48 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a85fb052-e390-4d4b-977e-1c988a8f203d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/api.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/controller.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/constants.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/module.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/query/TODO.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/query/cache_query.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/query/es_init.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/query/es_query.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/query/queries_ids.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/query/query.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/rank/rank.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/rank/rank_helper.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/recommend/abtest.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/recommend/personalinfo.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/recommend/recommend.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/recommend/recstgy.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/recommend/traffic.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/template/cache_template.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/template/draw_template.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/template/parse_template.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/template/template.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/usercf/TODO.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/usercf/usercf.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/module/usercf/usercf_helper.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/cache.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/cmd.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/constants.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/proxy.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/redis.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/storage.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/conf.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/conf_test.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/http.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/log.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/monitor.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/myconf.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/myconf.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/myconf_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="a85fb052-e390-4d4b-977e-1c988a8f203d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,7 +52,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/util" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
