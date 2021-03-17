@@ -1,0 +1,6 @@
+# 排除所有.开头的隐藏文件:
+.idea
+# 排除所有.class文件:
+*.class
+# 排除vendor文件夹:
+vendor
