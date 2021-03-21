@@ -17,3 +17,7 @@ type AppResponse struct {
 	UserToken     string         `json:"userToken"`
 	ServerTime    string         `json:"serverTime"`
 }
+const (
+	APPRESPONSE_CODE_SUCCESS string = "200"
+	APPRESPONSE_CODE_FAIL    string = "0"
+)
