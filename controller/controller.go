@@ -31,4 +31,5 @@ func RecommendAppHomePage(r *http.Request, w http.ResponseWriter) (res api.AppRe
 	param.SetRecAction(recAction)
 	param.SetChannel(model.HOMECHANNEL)
 	res = recommend.RecommendEntry(&param)
+	return
 }
