@@ -3,6 +3,9 @@ package controller
 import (
 	"net/http"
 	"recommend/api"
+	"recommend/model"
+	"recommend/model/recommend"
+	"recommend/util"
 )
 
 func Exam(r *http.Request, w http.ResponseWriter) (res api.AppResponse) {
@@ -14,11 +17,12 @@ func RecommendAppHomePage(r *http.Request, w http.ResponseWriter) (res api.AppRe
 		if err := recover(); err != nil {
 			res.ResCode = api.APPRESPONSE_CODE_SUCCESS
 			res.ResStatus = api.REQUEST_ERR
-			Errorln(err)
+			util.Errorln(err)
 		}
 	}()
 
 	var param model.Param
+
 	userId := r.FormValue("userId")
 	param.SetUserId(userId)
 	uuid := r.FormValue("uuid")

@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+const (
+	HOMECHANNEL = "homepage"
+)
+
 type ArticleList []Article
 type Article struct {
 	// cp from pb
@@ -178,6 +182,7 @@ func (m *Article) GetRecommendTimeLimit() int64 {
 	}
 	return 0
 }
+
 type Stgy struct {
 	userId     string
 	deviceId   string
@@ -249,6 +254,7 @@ func (s *Stgy) SetChannel(st string) {
 	s.channel = st
 	return
 }
+
 type PersonalInfo struct {
 	Showlist         []string
 	Clicklist        []string
@@ -257,6 +263,7 @@ type PersonalInfo struct {
 	History_usertag  map[string]float64
 	Realtime_usertag map[string]float64
 }
+
 func (p *PersonalInfo) SetHistoryUsertag(hu map[string]string) {
 	p.History_usertag = make(map[string]float64)
 	for k, v := range hu {
@@ -265,4 +272,47 @@ func (p *PersonalInfo) SetHistoryUsertag(hu map[string]string) {
 		p.History_usertag[k] = val
 	}
 	return
+}
+
+type Param struct {
+	userId    string `json:"userId"`
+	uuid      string
+	itemSize  string
+	recAction string
+	pageNum   string
+	channel   string
+}
+
+func (p *Param) SetUserId(s string) {
+	p.userId = s
+}
+func (p Param) GetUserId() string {
+	return p.userId
+}
+func (p *Param) SetUuid(s string) {
+	p.uuid = s
+}
+func (p Param) GetUuid() string {
+	return p.uuid
+}
+func (p *Param) SetItemSize(s string) {
+	p.itemSize = s
+}
+func (p *Param) SetRecAction(s string) {
+	p.recAction = s
+}
+func (p Param) GetRecAction() string {
+	return p.recAction
+}
+func (p *Param) SetPageNum(s string) {
+	p.pageNum = s
+}
+func (p Param) GetPageNum() string {
+	return p.pageNum
+}
+func (p *Param) SetChannel(s string) {
+	p.channel = s
+}
+func (p Param) GetChannel() string {
+	return p.channel
 }

@@ -21,3 +21,7 @@ const (
 	APPRESPONSE_CODE_SUCCESS string = "200"
 	APPRESPONSE_CODE_FAIL    string = "0"
 )
+
+const (
+	REQUEST_ERR            ResponseStatus = "请求异常"
+)
