@@ -55,6 +55,7 @@ const (
 
 	ACTICLETAGSKEY = "articleTags"
 )
+
 func NewArticle(fields []byte) (article Article, err error) {
 	defer func() {
 		if e := recover(); e != nil {

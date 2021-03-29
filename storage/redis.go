@@ -1,9 +1,9 @@
 package storage
 
 import (
-	. "recommend/util"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
+	. "recommend/util"
 	"strconv"
 	"strings"
 	"time"

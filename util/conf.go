@@ -28,7 +28,7 @@ func initConfig() {
 	conf = goini.SetConfig(confPath)
 	//Infoln(confPath)
 	RunMode = conf.GetValue("runmode", "mode")
-	fmt.Println("init get runMode",RunMode)
+	fmt.Println("init get runMode", RunMode)
 }
 
 /**

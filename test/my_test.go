@@ -1,6 +1,7 @@
 package test
 
 import "testing"
+
 const (
 	LevelDebug = (iota + 1) * 100
 	LevelInfo
@@ -9,6 +10,7 @@ const (
 	LevelError
 	LevelReport
 )
+
 func TestMyFun(t *testing.T) {
-	t.Logf("%v\n%v\n%v\n%v\n%v\n%v\n",LevelDebug,LevelInfo,LevelWarning,LevelDatalog,LevelError,LevelReport)
+	t.Logf("%v\n%v\n%v\n%v\n%v\n%v\n", LevelDebug, LevelInfo, LevelWarning, LevelDatalog, LevelError, LevelReport)
 }

@@ -17,11 +17,12 @@ type AppResponse struct {
 	UserToken     string         `json:"userToken"`
 	ServerTime    string         `json:"serverTime"`
 }
+
 const (
 	APPRESPONSE_CODE_SUCCESS string = "200"
 	APPRESPONSE_CODE_FAIL    string = "0"
 )
 
 const (
-	REQUEST_ERR            ResponseStatus = "请求异常"
+	REQUEST_ERR ResponseStatus = "请求异常"
 )

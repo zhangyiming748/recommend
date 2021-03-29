@@ -8,12 +8,12 @@ import (
 )
 
 const (
-	LevelDebug = (iota + 1) * 100 //100
-	LevelInfo //200
-	LevelWarning //300
-	LevelDatalog //400
-	LevelError //500
-	LevelReport //600
+	LevelDebug   = (iota + 1) * 100 //100
+	LevelInfo                       //200
+	LevelWarning                    //300
+	LevelDatalog                    //400
+	LevelError                      //500
+	LevelReport                     //600
 )
 
 var (
