@@ -8,5 +8,5 @@ vendor
 *.tar.bz2
 #排除python环境配置文件
 venv
-排除DS文件
+#排除DS文件
 .DS_Store
