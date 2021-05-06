@@ -4,3 +4,7 @@
 *.class
 # 排除vendor文件夹:
 vendor
+# 排除归档文件
+*.tar.bz2
+#排除python环境配置文件
+venv
