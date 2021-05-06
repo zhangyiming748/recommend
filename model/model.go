@@ -7,9 +7,251 @@ import (
 	"strings"
 )
 
-const (
-	HOMECHANNEL = "homepage"
-)
+type Recommend struct {
+	datcreate             string `json:"datcreate"`
+	datpublist            string `json:"datpublist"`
+	datpublistime         string `json:"datpublistime"`
+	expertnewstime        string `json:"expertnewstime"`
+	indexrightmessagetime string `json:"indexrightmessagetime"`
+	is_have_logo          string `json:"is_have_logo"`
+	logo_position         string `json:"logo_position"`
+	logo_url              string `json:"logo_url"`
+	numarticleid          string `json:"numarticleid"`
+	numclick              string `json:"numclick"`
+	numkeywordid          string `json:"numkeywordid"`
+	numsort               string `json:"numsort"`
+	vc2brieftitle         string `json:"vc2brieftitle"`
+	vc2keyword            string `json:"vc2keyword"`
+	vc2keywordname        string `json:"vc2keywordname"`
+	vc2summary            string `json:"vc2summary"`
+	vc2thumbpicurl        string `json:"vc2thumbpicurl"`
+	vc2timelen            string `json:"vc2timelen"`
+	vc2title              string `json:"vc2title"`
+	vc2type               string `json:"vc2type"`
+	vc2video              string `json:"vc2video"`
+	vc2videourltelecom    string `json:"vc2videourltelecom"`
+	vc2videourlunited     string `json:"vc2videourlunited"`
+	videotime             string `json:"videotime"`
+	comment_number        string `json:"comment_number"`
+	iqiyibackpicurl       string `json:"iqiyibackpicurl"`
+	iqiyi_pic             string `json:"iqiyi_pic"`
+	iqiyibackvideoh5url   string `json:"iqiyibackvideoh5url"`
+	iqiyibackvideopcurl   string `json:"iqiyibackvideopcurl"`
+	iqiyipayflag          string `json:"iqiyipayflag"`
+	is1080pay             string `json:"is1080pay"`
+	iscash                string `json:"iscash"`
+	qipuid                string `json:"qipuid"`
+	ssports_pic           string `json:"ssports_pic"`
+	ssportspayflag        string `json:"ssportspayflag"`
+	tag_bg_iqiyi          string `json:"tag_bg_iqiyi"`
+	tag_bg_ssports        string `json:"tag_bg_ssports"`
+	tag_iqiyi             string `json:"tag_iqiyi"`
+	tag_ssports           string `json:"tag_ssports"`
+	uploadiqiyiflag       string `json:"uploadiqiyiflag"`
+	vc2displaymode        string `json:"vc2displaymode"`
+	publish_time          string `json:"publish_time"`
+	create_time           string `json:"create_time"`
+	vc2thumbpicurl_icon   string `json:"vc2thumbpicurl_icon"`
+	vc2thumbpicurl2       string `json:"vc2thumbpicurl2"`
+	vc2thumbpicurl3       string `json:"vc2thumbpicurl3"`
+	vc2topicpicurl        string `json:"vc2topicpicurl"`
+	vc2picurl             string `json:"vc2picurl"`
+	vc2clickgourl         string `json:"vc2clickgourl"`
+	inum                  string `json:"inum"`
+	album_id              string `json:"album_id"`
+	vc2source             string `json:"vc2source"`
+	new_version_action    string `json:"new_version_action"`
+	new_vc2type           string `json:"new_vc2type"`
+	new_version_type      string `json:"new_version_type"`
+	isSingleRight         string `json:"isSingleRight"`
+	isPublicRight         string `json:"isPublicRight"`
+	isSpecificRight       string `json:"isSpecificRight"`
+	display_model         string `json:"display_model"`
+	name                  string `json:"name"`
+	list_type             string `json:"list_type"`
+}
+
+type RecommendInfo struct {
+	strategy  string        `json:"strategy"`
+	list      []interface{} `json:"list"`
+	size      int           `json:"size"`
+	channelId string        `json:"channelId"`
+	action    string        `json:"action"`
+}
+
+func (r *RecommendInfo) SetStrategy(s string) {
+	r.strategy = s
+}
+func (r RecommendInfo) GetStrategy() string {
+	return r.strategy
+}
+func (r *RecommendInfo) SetChannelId(s string) {
+	r.channelId = s
+}
+func (r RecommendInfo) GetChannelId() string {
+	return r.channelId
+}
+func (r *RecommendInfo) SetAction(s string) {
+	r.action = s
+}
+func (r RecommendInfo) GetAction() string {
+	return r.action
+}
+func (r *RecommendInfo) SetList(s []interface{}) {
+	r.list = s
+}
+func (r RecommendInfo) GetList() []interface{} {
+	return r.list
+}
+func (r *RecommendInfo) SetSize(s int) {
+	r.size = s
+}
+func (r RecommendInfo) GetSize() int {
+	return r.size
+}
+func (this RecommendInfo) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]interface{}{
+		"strategy":  this.strategy,
+		"list":      this.list,
+		"size":      this.size,
+		"channelId": this.channelId,
+		"action":    this.action,
+	})
+}
+
+type Param struct {
+	userId    string `json:"userId"`
+	uuid      string
+	itemSize  string
+	recAction string
+	pageNum   string
+	channel   string
+}
+
+func (p *Param) SetUserId(s string) {
+	p.userId = s
+}
+func (p Param) GetUserId() string {
+	return p.userId
+}
+func (p *Param) SetUuid(s string) {
+	p.uuid = s
+}
+func (p Param) GetUuid() string {
+	return p.uuid
+}
+func (p *Param) SetItemSize(s string) {
+	p.itemSize = s
+}
+func (p *Param) SetRecAction(s string) {
+	p.recAction = s
+}
+func (p Param) GetRecAction() string {
+	return p.recAction
+}
+func (p *Param) SetPageNum(s string) {
+	p.pageNum = s
+}
+func (p Param) GetPageNum() string {
+	return p.pageNum
+}
+func (p *Param) SetChannel(s string) {
+	p.channel = s
+}
+func (p Param) GetChannel() string {
+	return p.channel
+}
+
+type PersonalInfo struct {
+	Showlist         []string
+	Clicklist        []string
+	Quick_showlist   []string
+	Nfblist          []string
+	History_usertag  map[string]float64
+	Realtime_usertag map[string]float64
+}
+
+func (p *PersonalInfo) SetHistoryUsertag(hu map[string]string) {
+	p.History_usertag = make(map[string]float64)
+	for k, v := range hu {
+		var val float64
+		fmt.Sscanf(v, "%f", &val)
+		p.History_usertag[k] = val
+	}
+	return
+}
+
+type Stgy struct {
+	userId     string
+	deviceId   string
+	abtestStgy string
+	algoStgy   string
+	action     string
+	uniqueid   string
+	channel    string
+	size       int
+	PersonalInfo
+	Filtermap map[string]bool
+	FixedList map[string]int
+	FixedPos  map[int][]string
+}
+
+func (s Stgy) GetUniqueid() string {
+	return s.uniqueid
+}
+func (s *Stgy) SetUniqueid(u string) {
+	s.uniqueid = u
+	return
+}
+func (s Stgy) GetUserId() string {
+	return s.userId
+}
+func (s *Stgy) SetUserId(u string) {
+	s.userId = u
+	return
+}
+func (s Stgy) GetDeviceId() string {
+	return s.deviceId
+}
+func (s *Stgy) SetDeviceId(u string) {
+	s.deviceId = u
+	return
+}
+func (s Stgy) GetAlgoStgy() string {
+	return s.algoStgy
+}
+func (s *Stgy) SetAlgoStgy(st string) {
+	s.algoStgy = st
+	return
+}
+func (s Stgy) GetAbtestStgy() string {
+	return s.abtestStgy
+}
+func (s *Stgy) SetAbtestStgy(st string) {
+	s.abtestStgy = st
+	return
+}
+func (s Stgy) GetAction() string {
+	return s.action
+}
+func (s *Stgy) SetAction(st string) {
+	s.action = st
+	return
+}
+func (s Stgy) GetSize() int {
+	return s.size
+}
+func (s *Stgy) SetSize(st int) {
+	s.size = st
+	return
+}
+func (s Stgy) GetChannel() string {
+	return s.channel
+}
+func (s *Stgy) SetChannel(st string) {
+	s.channel = st
+	return
+}
 
 type ArticleList []Article
 type Article struct {
@@ -26,35 +268,6 @@ type Article struct {
 	Servertag          string             `protobuf:"bytes,10,opt,name=servertag,proto3" json:"servertag,omitempty"`
 	RecommendTimeLimit int64              `protobuf:"varint,11,opt,name=recommendTimeLimit,proto3" json:"recommendTimeLimit,omitempty"`
 }
-
-const (
-	PERSONALALGO string = "personal"
-	RANDOMALGO   string = "random"
-
-	ACTION_UP   string = "up"
-	ACTION_DOWN string = "down"
-	ACTION_HOME string = "home"
-
-	RECOMMEND_SIZE_UP   = 10
-	RECOMMEND_SIZE_DOWN = 10
-	RECOMMEND_SIZE_HOME = 20
-
-	CATEGORY_RATIO = 0.8
-
-	SHOWLISTLEN      = 3000
-	CLICKLISTLEN     = 100
-	QUICKSHOWLISTLEN = 60
-
-	JSONP_CALLBACK_KEY string = "callback"
-	EXCEPTION_MSG      string = "系统错误"
-	DEVICE_TYPE_H5     string = "APP"
-	DEVICE_TYPE_PC     string = "PC"
-	DEVICE_PC          string = "PC"
-	DEVICE_H5          string = "H5"
-	DEVICE_APP         string = "APP"
-
-	ACTICLETAGSKEY = "articleTags"
-)
 
 func NewArticle(fields []byte) (article Article, err error) {
 	defer func() {
@@ -210,138 +423,4 @@ func (m *Article) GetRecommendTimeLimit() int64 {
 		return m.RecommendTimeLimit
 	}
 	return 0
-}
-
-type Stgy struct {
-	userId     string
-	deviceId   string
-	abtestStgy string
-	algoStgy   string
-	action     string
-	uniqueid   string
-	channel    string
-	size       int
-	PersonalInfo
-	Filtermap map[string]bool
-	FixedList map[string]int
-	FixedPos  map[int][]string
-}
-
-func (s Stgy) GetUniqueid() string {
-	return s.uniqueid
-}
-func (s *Stgy) SetUniqueid(u string) {
-	s.uniqueid = u
-	return
-}
-func (s Stgy) GetUserId() string {
-	return s.userId
-}
-func (s *Stgy) SetUserId(u string) {
-	s.userId = u
-	return
-}
-func (s Stgy) GetDeviceId() string {
-	return s.deviceId
-}
-func (s *Stgy) SetDeviceId(u string) {
-	s.deviceId = u
-	return
-}
-func (s Stgy) GetAlgoStgy() string {
-	return s.algoStgy
-}
-func (s *Stgy) SetAlgoStgy(st string) {
-	s.algoStgy = st
-	return
-}
-func (s Stgy) GetAbtestStgy() string {
-	return s.abtestStgy
-}
-func (s *Stgy) SetAbtestStgy(st string) {
-	s.abtestStgy = st
-	return
-}
-func (s Stgy) GetAction() string {
-	return s.action
-}
-func (s *Stgy) SetAction(st string) {
-	s.action = st
-	return
-}
-func (s Stgy) GetSize() int {
-	return s.size
-}
-func (s *Stgy) SetSize(st int) {
-	s.size = st
-	return
-}
-func (s Stgy) GetChannel() string {
-	return s.channel
-}
-func (s *Stgy) SetChannel(st string) {
-	s.channel = st
-	return
-}
-
-type PersonalInfo struct {
-	Showlist         []string
-	Clicklist        []string
-	Quick_showlist   []string
-	Nfblist          []string
-	History_usertag  map[string]float64
-	Realtime_usertag map[string]float64
-}
-
-func (p *PersonalInfo) SetHistoryUsertag(hu map[string]string) {
-	p.History_usertag = make(map[string]float64)
-	for k, v := range hu {
-		var val float64
-		fmt.Sscanf(v, "%f", &val)
-		p.History_usertag[k] = val
-	}
-	return
-}
-
-type Param struct {
-	userId    string `json:"userId"`
-	uuid      string
-	itemSize  string
-	recAction string
-	pageNum   string
-	channel   string
-}
-
-func (p *Param) SetUserId(s string) {
-	p.userId = s
-}
-func (p Param) GetUserId() string {
-	return p.userId
-}
-func (p *Param) SetUuid(s string) {
-	p.uuid = s
-}
-func (p Param) GetUuid() string {
-	return p.uuid
-}
-func (p *Param) SetItemSize(s string) {
-	p.itemSize = s
-}
-func (p *Param) SetRecAction(s string) {
-	p.recAction = s
-}
-func (p Param) GetRecAction() string {
-	return p.recAction
-}
-func (p *Param) SetPageNum(s string) {
-	p.pageNum = s
-}
-func (p Param) GetPageNum() string {
-	return p.pageNum
-}
-func (p *Param) SetChannel(s string) {
-	p.channel = s
-}
-func (p Param) GetChannel() string {
-	return p.channel
 }
