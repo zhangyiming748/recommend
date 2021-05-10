@@ -3,11 +3,14 @@ package query
 import (
 	"context"
 	"encoding/json"
-	"github.com/olivere/elastic"
 	. "recommend/model"
 	. "recommend/util"
-	"strings"
+	//"fmt"
+	"github.com/olivere/elastic"
 	"time"
+
+	//	"strconv"
+	"strings"
 )
 
 func qNewArticlesFromES(size int) []*Article {
