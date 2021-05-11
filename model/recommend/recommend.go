@@ -5,12 +5,29 @@ import (
 	. "recommend/model"
 	"recommend/storage"
 	. "recommend/util"
+
+	"fmt"
 	"time"
 )
 
+var chooseProb []float64
+
+func SetChooseProb(cprob []string) {
+	for _, ff := range cprob {
+		var f float64
+		fmt.Sscanf(ff, "%f", &f)
+		chooseProb = append(chooseProb, f)
+	}
+	Infoln(chooseProb)
+}
+
+/**
+  首页推荐
+*/
+const MAXTIMEOUT = 800
+
 func RecommendEntry(param *Param) (res api.AppResponse) {
 	res.ResCode = api.APPRESPONSE_CODE_SUCCESS
-
 	defer func() {
 		trafficDone()
 		if err := recover(); err != nil {
@@ -66,9 +83,9 @@ func RecommendEntry(param *Param) (res api.AppResponse) {
 	Debugln(stgy.GetUniqueid(), "size:", stgy.GetSize())
 	//使用reslist渲染结果
 	//t := time.Now()
-	res.RetData = template.DrawTemplate(stgy, reslist)
+	//res.RetData = template.DrawTemplate(stgy, reslist)
 	//DataLogln("drawTemplate:\t",time.Since(t))
-
+	res.RetData=reslist
 	//异步处理快速过滤队列
 	if stgy.GetAlgoStgy() == PERSONALALGO {
 		go func(u string, reslist ArticleList) {
@@ -88,4 +105,14 @@ func RecommendEntry(param *Param) (res api.AppResponse) {
 		}
 	}()
 	return
+}
+
+func checkArticleNum(reclist []ArticleList) (num int) {
+	numMap := make(map[string]bool)
+	for _, rli := range reclist {
+		for _, art := range rli {
+			numMap[art.GetId()] = true
+		}
+	}
+	return len(numMap)
 }
