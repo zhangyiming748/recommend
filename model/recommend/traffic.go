@@ -1,5 +1,9 @@
 package recommend
 
+import (
+	. "recommend/util"
+)
+
 var MaxTraffic uint64
 var TrafficCtrl AtomicUint64
 

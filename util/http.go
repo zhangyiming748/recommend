@@ -120,7 +120,7 @@ func httpDo(urlstr string, fields []string, headers []string) string {
 	return string(body)
 }
 
-const AlarmURL = "http://127.0.0.1/api/notice/common/alarm?tag=xxx"
+const AlarmURL = "http://172.31.2.189/api/notice/common/alarm?tag=ssports-rec&valid=0"
 
 func SendAlarm(v ...interface{}) {
 	content := fmt.Sprint(v...)

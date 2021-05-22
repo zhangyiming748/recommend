@@ -1,8 +1,8 @@
 package storage
 
 import (
-	. "../util"
 	"fmt"
+	. "recommend/util"
 	"strconv"
 	"strings"
 	"time"
