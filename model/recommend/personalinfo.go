@@ -1,11 +1,11 @@
 package recommend
 
 import (
+	"encoding/json"
 	. "recommend/model"
+	"recommend/model/query"
 	"recommend/storage"
 	. "recommend/util"
-	"recommend/model/query"
-	"encoding/json"
 	//"fmt"
 	"math"
 	"sync"

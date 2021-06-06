@@ -85,7 +85,7 @@ func RecommendEntry(param *Param) (res api.AppResponse) {
 	//t := time.Now()
 	//res.RetData = template.DrawTemplate(stgy, reslist)
 	//DataLogln("drawTemplate:\t",time.Since(t))
-	res.RetData=reslist
+	res.RetData = reslist
 	//异步处理快速过滤队列
 	if stgy.GetAlgoStgy() == PERSONALALGO {
 		go func(u string, reslist ArticleList) {

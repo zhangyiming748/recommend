@@ -4,11 +4,11 @@ import (
 	. "recommend/model"
 	. "recommend/util"
 
+	"fmt"
+	"math/rand"
 	"recommend/model/rank"
 	"recommend/model/template"
 	"recommend/model/usercf"
-	"fmt"
-	"math/rand"
 	"strings"
 	"sync"
 	"time"

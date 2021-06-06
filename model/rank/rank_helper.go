@@ -2,8 +2,8 @@ package rank
 
 import (
 	. "recommend/model"
-	. "recommend/util"
 	"recommend/model/query"
+	. "recommend/util"
 )
 
 const (
