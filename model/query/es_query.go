@@ -26,7 +26,7 @@ func qNewArticlesFromES(size int) []*Article {
 	q1.Must(elastic.NewTermQuery("numstatus", 4), elastic.NewTermsQuery("vc2type.keyword", "A", "I"))
 	q.Should(q1)
 	q2 := elastic.NewBoolQuery()
-	q2.Must(elastic.NewTermQuery("numstatus", 4), elastic.NewTermQuery("vc2type.keyword", "V"), elastic.NewTermsQuery("contentsource", "xingying-ppc", "iqiyi-ppc"))
+	q2.Must(elastic.NewTermQuery("numstatus", 4), elastic.NewTermQuery("vc2type.keyword", "V"))
 	q.Should(q2)
 
 	q = q.QueryName("idsquery")
