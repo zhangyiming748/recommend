@@ -1,6 +1,6 @@
 package main
 
-func CacheQueryinit()  {
+func CacheQueryinit() {
 	//loopfunc:= func() {
 	//	for  {
 	//		data:=qFromES()
