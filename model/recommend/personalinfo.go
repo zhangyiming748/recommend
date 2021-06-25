@@ -3,7 +3,7 @@ package recommend
 import (
 	"encoding/json"
 	. "recommend/model"
-	"recommend/query"
+	"recommend/model/query"
 	"recommend/storage"
 	. "recommend/util"
 	//"fmt"

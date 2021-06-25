@@ -1,9 +1,9 @@
 package storage
 
 import (
-	. "../util"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
+	. "recommend/util"
 )
 
 func (r RedisInstance) Exists(pat string) (res bool, err error) {

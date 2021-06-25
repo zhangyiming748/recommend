@@ -9,6 +9,7 @@ import (
 
 const (
 	HOMECHANNEL = "homepage"
+	HOTVIDEOCHANNEL ="hotpage"
 )
 
 type ArticleList []Article

@@ -20,7 +20,7 @@ func EsClient() (client *elastic.Client, err error) {
 	}()
 
 	//es_url := GetVal(RunMode+"_es_args", "es_url")
-	urls:="http://127.0.0.1:9200"
+	urls := "http://127.0.0.1:9200"
 	//urls := strings.Split(es_url, ",")
 	//Infof("es_url:%v", urls)
 	client, err = elastic.NewClient(

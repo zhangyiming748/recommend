@@ -1,10 +1,10 @@
 package storage
 
 import (
-	. "../util"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"math/rand"
+	. "recommend/util"
 	"time"
 )
 

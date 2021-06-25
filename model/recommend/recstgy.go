@@ -6,9 +6,9 @@ import (
 
 	"fmt"
 	"math/rand"
-	"recommend/rank"
-	"recommend/template"
-	"recommend/usercf"
+	"recommend/model/rank"
+	"recommend/model/template"
+	"recommend/model/usercf"
 	"strings"
 	"sync"
 	"time"

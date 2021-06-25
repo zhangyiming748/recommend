@@ -20,10 +20,9 @@ func qFromES() {
 	q1.Must(elastic.NewTermQuery("age", 4))
 	q.Should(q1)
 
-
 	q = q.QueryName("test")
 
-	d:=time.Since(t)
+	d := time.Since(t)
 	log.Println(d)
 
 }
