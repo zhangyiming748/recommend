@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package protoFile;
+import "article.proto";
+
+option go_package="protoFile";
+
+//请求体
+message ESRequest{
+    string method = 1;
+    map<string , string> param = 2;
+}
+
+//返回数据
+message ESReply{
+    // Status 枚举状态
+    enum Status {
+        OK = 0;
+        FAIL = 1;
+    }
+    Status code = 3;
+    string message = 4;
+    repeated Article data = 5;
+}
+
+
+//定义ES服务
+service ESService{
+    rpc Communication(ESRequest) returns (ESReply) {}
+}

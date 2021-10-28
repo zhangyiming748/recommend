@@ -8,12 +8,12 @@ import (
 )
 
 const (
-	LevelDebug   = (iota + 1) * 100 //100
-	LevelInfo                       //200
-	LevelWarning                    //300
-	LevelDatalog                    //400
-	LevelError                      //500
-	LevelReport                     //600
+	LevelDebug = (iota + 1) * 100
+	LevelInfo
+	LevelWarning
+	LevelDatalog
+	LevelError
+	LevelReport
 )
 
 var (
@@ -134,20 +134,4 @@ func ReportLogln(v ...interface{}) {
 func ReportLogf(format string, v ...interface{}) {
 	format = logFile() + " REPORTLOG\t" + format
 	log.Printf(format, v...)
-}
-
-func PanicPosition() string {
-	_, file, line, _ := runtime.Caller(1)
-	li := strings.Split(file, "/")
-	if len(li) >= 3 {
-		file = strings.Join(li[len(li)-3:], "/")
-	}
-	s := fmt.Sprintf("%s +%d: ", file, line)
-	return s
-}
-func PanicRecover(pos string) {
-	if err := recover(); err != nil {
-		log.Printf(logFile() + " PANIC! Pay Attention at " + pos + fmt.Sprintf(" err %v", err))
-		SendAlarm(" PANIC! Pay Attention at "+pos, " err ", err)
-	}
 }

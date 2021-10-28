@@ -1,11 +1,10 @@
 package util
 
 import (
-	"fmt"
 	"github.com/widuu/goini"
 )
 
-const confPath = "../conf.ini"
+const confPath = "./conf.ini"
 
 var (
 	RunMode string
@@ -26,9 +25,8 @@ func init() {
 
 func initConfig() {
 	conf = goini.SetConfig(confPath)
-	//Infoln(confPath)
+	Infoln(confPath)
 	RunMode = conf.GetValue("runmode", "mode")
-	fmt.Println("init get runMode", RunMode)
 }
 
 /**

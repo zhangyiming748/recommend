@@ -56,13 +56,11 @@ func NewMonitorServer() Server {
 	return server
 }
 
-//设置延迟函数
 func (this *Server) SetLatency(duration time.Duration) {
 	pos := this.latencyIndex.Add(1)
 	this.latencies[pos%LatencySize] = duration
 }
 
-//自定义解码json
 func (this Server) MarshalJSON() ([]byte, error) {
 	hits := this.Hits.Load()
 	since := time.Now().Unix() % QpsDuration
@@ -89,7 +87,6 @@ func (this Server) MarshalJSON() ([]byte, error) {
 	})
 }
 
-//查看qps(每秒查询率)
 func (this *Server) Cycle() {
 	for {
 		now := time.Now().Unix()

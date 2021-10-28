@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -118,12 +117,4 @@ func httpDo(urlstr string, fields []string, headers []string) string {
 	}
 
 	return string(body)
-}
-
-const AlarmURL = "http://127.0.0.1/api/notice/common/alarm?tag=xxx"
-
-func SendAlarm(v ...interface{}) {
-	content := fmt.Sprint(v...)
-	httpPost(AlarmURL, "content="+content)
-	return
 }

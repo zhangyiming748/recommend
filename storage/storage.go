@@ -37,11 +37,11 @@ func newRedisHelper(runMode, redisName string) {
 	prefixs := make([]Prefix, 0)
 	for i, k := range keysPrefix {
 		var p Prefix
-		p.prefix = k
+		p.Prefix = k
 		t, _ := strconv.Atoi(keysCacheable[i])
 		if t > 0 {
-			p.isCacheable = true
-			p.cacheMin, _ = time.ParseDuration(keysCacheable[i] + "m")
+			p.IsCacheable = true
+			p.CacheMin, _ = time.ParseDuration(keysCacheable[i] + "m")
 		}
 		prefixs = append(prefixs, p)
 	}

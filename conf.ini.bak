@@ -2,7 +2,7 @@
 mode=dev
 #mode=product
 [dev_redis_args]
-redis_0_args = prefix:showli,clickli,quick_showli,articleDetail,uuidmap,usertags,articlescore;cache:-1,-1,-1,3,120,120,-1;usepipe:true
+redis_0_args = prefix:showli,clickli,quick_showli,articleDetail,uuidmap,usertags,articleNfb;cache:-1,-1,-1,3,120,120,-1;usepipe:true
 redis_0_url  = 192.168.4.20:6379?password=888888&db=0
 [product_redis_args]
 redis_0_args = prefix:articleDetail;cache:3;usepipe:true

@@ -1,216 +1,134 @@
-package model
+package main
 
 import (
+	pb "../rpc/protoFile"
 	"encoding/json"
 	"fmt"
-	"strconv"
-	"strings"
 )
 
-const (
-	HOMECHANNEL = "homepage"
-	HOTVIDEOCHANNEL ="hotpage"
-)
-
-type ArticleList []Article
-type Article struct {
-	// cp from pb
-	Id                 string             `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Tags               []string           `protobuf:"bytes,2,rep,name=tags,proto3" json:"tags,omitempty"`
-	Largeclass         string             `protobuf:"bytes,3,opt,name=largeclass,proto3" json:"largeclass,omitempty"`
-	Mediumclass        string             `protobuf:"bytes,4,opt,name=mediumclass,proto3" json:"mediumclass,omitempty"`
-	Smallclass         string             `protobuf:"bytes,5,opt,name=smallclass,proto3" json:"smallclass,omitempty"`
-	Datpublis          string             `protobuf:"bytes,6,opt,name=datpublis,proto3" json:"datpublis,omitempty"`
-	Vc2Type            string             `protobuf:"bytes,7,opt,name=vc2type,proto3" json:"vc2type,omitempty"`
-	Finalscore         float64            `protobuf:"fixed64,8,opt,name=finalscore,proto3" json:"finalscore,omitempty"`
-	Computescore       map[string]float64 `protobuf:"bytes,9,rep,name=computescore,proto3" json:"computescore,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"fixed64,2,opt,name=value,proto3"`
-	Servertag          string             `protobuf:"bytes,10,opt,name=servertag,proto3" json:"servertag,omitempty"`
-	RecommendTimeLimit int64              `protobuf:"varint,11,opt,name=recommendTimeLimit,proto3" json:"recommendTimeLimit,omitempty"`
+type Recommend struct {
+	datcreate             string `json:"datcreate"`
+	datpublist            string `json:"datpublist"`
+	datpublistime         string `json:"datpublistime"`
+	expertnewstime        string `json:"expertnewstime"`
+	indexrightmessagetime string `json:"indexrightmessagetime"`
+	is_have_logo          string `json:"is_have_logo"`
+	logo_position         string `json:"logo_position"`
+	logo_url              string `json:"logo_url"`
+	numarticleid          string `json:"numarticleid"`
+	numclick              string `json:"numclick"`
+	numkeywordid          string `json:"numkeywordid"`
+	numsort               string `json:"numsort"`
+	vc2brieftitle         string `json:"vc2brieftitle"`
+	vc2keyword            string `json:"vc2keyword"`
+	vc2keywordname        string `json:"vc2keywordname"`
+	vc2summary            string `json:"vc2summary"`
+	vc2thumbpicurl        string `json:"vc2thumbpicurl"`
+	vc2timelen            string `json:"vc2timelen"`
+	vc2title              string `json:"vc2title"`
+	vc2type               string `json:"vc2type"`
+	vc2video              string `json:"vc2video"`
+	vc2videourltelecom    string `json:"vc2videourltelecom"`
+	vc2videourlunited     string `json:"vc2videourlunited"`
+	videotime             string `json:"videotime"`
+	comment_number        string `json:"comment_number"`
+	iqiyibackpicurl       string `json:"iqiyibackpicurl"`
+	iqiyi_pic             string `json:"iqiyi_pic"`
+	iqiyibackvideoh5url   string `json:"iqiyibackvideoh5url"`
+	iqiyibackvideopcurl   string `json:"iqiyibackvideopcurl"`
+	iqiyipayflag          string `json:"iqiyipayflag"`
+	is1080pay             string `json:"is1080pay"`
+	iscash                string `json:"iscash"`
+	qipuid                string `json:"qipuid"`
+	ssports_pic           string `json:"ssports_pic"`
+	ssportspayflag        string `json:"ssportspayflag"`
+	tag_bg_iqiyi          string `json:"tag_bg_iqiyi"`
+	tag_bg_ssports        string `json:"tag_bg_ssports"`
+	tag_iqiyi             string `json:"tag_iqiyi"`
+	tag_ssports           string `json:"tag_ssports"`
+	uploadiqiyiflag       string `json:"uploadiqiyiflag"`
+	vc2displaymode        string `json:"vc2displaymode"`
+	publish_time          string `json:"publish_time"`
+	create_time           string `json:"create_time"`
+	vc2thumbpicurl_icon   string `json:"vc2thumbpicurl_icon"`
+	vc2thumbpicurl2       string `json:"vc2thumbpicurl2"`
+	vc2thumbpicurl3       string `json:"vc2thumbpicurl3"`
+	vc2topicpicurl        string `json:"vc2topicpicurl"`
+	vc2picurl             string `json:"vc2picurl"`
+	vc2clickgourl         string `json:"vc2clickgourl"`
+	inum                  string `json:"inum"`
+	album_id              string `json:"album_id"`
+	vc2source             string `json:"vc2source"`
+	new_version_action    string `json:"new_version_action"`
+	new_vc2type           string `json:"new_vc2type"`
+	new_version_type      string `json:"new_version_type"`
+	isSingleRight         string `json:"isSingleRight"`
+	isPublicRight         string `json:"isPublicRight"`
+	isSpecificRight       string `json:"isSpecificRight"`
+	display_model         string `json:"display_model"`
+	name                  string `json:"name"`
+	list_type             string `json:"list_type"`
 }
 
-const (
-	PERSONALALGO string = "personal"
-	RANDOMALGO   string = "random"
+type RecommendInfo struct {
+	strategy  string        `json:"strategy"`
+	list      []interface{} `json:"list"`
+	size      int           `json:"size"`
+	channelId string        `json:"channelId"`
+	action    string        `json:"action"`
+}
 
-	ACTION_UP   string = "up"
-	ACTION_DOWN string = "down"
-	ACTION_HOME string = "home"
+func (this RecommendInfo) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]interface{}{
+		"strategy":  this.strategy,
+		"list":      this.list,
+		"size":      this.size,
+		"channelId": this.channelId,
+		"action":    this.action,
+	})
+}
 
-	RECOMMEND_SIZE_UP   = 10
-	RECOMMEND_SIZE_DOWN = 10
-	RECOMMEND_SIZE_HOME = 20
+type Param struct {
+	userId    string `json:userId`
+	uuid      string
+	itemSize  string
+	recAction string
+	pageNum   string
+}
 
-	CATEGORY_RATIO = 0.8
+func (p *Param) SetuserId(s string) {
+	p.userId = s
+}
+func (p *Param) Setuuid(s string) {
+	p.uuid = s
+}
+func (p *Param) SetitemSize(s string) {
+	p.itemSize = s
+}
+func (p *Param) SetrecAction(s string) {
+	p.recAction = s
+}
+func (p *Param) SetpageNum(s string) {
+	p.pageNum = s
+}
 
-	SHOWLISTLEN      = 3000
-	CLICKLISTLEN     = 100
-	QUICKSHOWLISTLEN = 60
+type PersonalInfo struct {
+	Showlist         []string
+	Clicklist        []string
+	Quick_showlist   []string
+	Nfblist          []string
+	History_usertag  map[string]float64
+	Realtime_usertag map[string]float64
+}
 
-	JSONP_CALLBACK_KEY string = "callback"
-	EXCEPTION_MSG      string = "系统错误"
-	DEVICE_TYPE_H5     string = "APP"
-	DEVICE_TYPE_PC     string = "PC"
-	DEVICE_PC          string = "PC"
-	DEVICE_H5          string = "H5"
-	DEVICE_APP         string = "APP"
-
-	ACTICLETAGSKEY = "articleTags"
-)
-
-func NewArticle(fields []byte) (article Article, err error) {
-	defer func() {
-		if e := recover(); e != nil {
-			fmt.Println("NewArticleError: ", err)
-			err = e.(error)
-		}
-	}()
-
-	var val map[string]interface{}
-	if err = json.Unmarshal(fields, &val); err != nil {
-		return
+func (p *PersonalInfo) SetHistoryUsertag(hu map[string]string) {
+	p.History_usertag = make(map[string]float64)
+	for k, v := range hu {
+		var val float64
+		fmt.Sscanf(v, "%f", &val)
+		p.History_usertag[k] = val
 	}
-	article.SetId(strconv.Itoa(int(val["id"].(float64))))
-	switch val["datpublist"].(type) {
-	case string:
-		article.SetDatPublis(defaultfunc(val["datpublist"]))
-	case float64:
-		article.SetDatPublis(strconv.FormatInt(int64(val["datpublist"].(float64)), 10))
-	}
-
-	rtl, ok := val["recommend_time_limit"].(float64)
-	if ok {
-		article.SetRecommendTimeLimit(int64(rtl))
-	}
-
-	article.SetVc2Type(defaultfunc(val["vc2type"]))
-	article.SetLargeClass(defaultfunc(val["l_classify_name"]))
-
-	article.SetMediumClass(defaultfunc(val["m_classify_name"]))
-
-	article.SetSmallClass(defaultfunc(val["s_classify_name"]))
-
-	article.SetTags(strings.Split(defaultfunc(val["tagnames"]), ","))
 	return
-}
-
-func defaultfunc(v interface{}) string {
-	if v == nil {
-		return ""
-	}
-	if strings.ToLower(v.(string)) == "null" {
-		return ""
-	}
-	return v.(string)
-}
-
-func (s *Article) SetId(v string) {
-	s.Id = v
-	return
-}
-func (s *Article) SetTags(v []string) {
-	s.Tags = v
-	return
-}
-func (s *Article) SetLargeClass(v string) {
-	s.Largeclass = v
-	return
-}
-func (s *Article) SetMediumClass(v string) {
-	s.Mediumclass = v
-	return
-}
-func (s *Article) SetSmallClass(v string) {
-	s.Smallclass = v
-	return
-}
-func (s *Article) SetDatPublis(v string) {
-	s.Datpublis = v
-	return
-}
-func (s *Article) SetRecommendTimeLimit(v int64) {
-	s.RecommendTimeLimit = v
-	return
-}
-func (s *Article) SetVc2Type(v string) {
-	s.Vc2Type = v
-	return
-}
-
-func (m *Article) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *Article) GetTags() []string {
-	if m != nil {
-		return m.Tags
-	}
-	return nil
-}
-
-func (m *Article) GetLargeclass() string {
-	if m != nil {
-		return m.Largeclass
-	}
-	return ""
-}
-
-func (m *Article) GetMediumclass() string {
-	if m != nil {
-		return m.Mediumclass
-	}
-	return ""
-}
-
-func (m *Article) GetSmallclass() string {
-	if m != nil {
-		return m.Smallclass
-	}
-	return ""
-}
-
-func (m *Article) GetDatpublis() string {
-	if m != nil {
-		return m.Datpublis
-	}
-	return ""
-}
-
-func (m *Article) GetVc2Type() string {
-	if m != nil {
-		return m.Vc2Type
-	}
-	return ""
-}
-
-func (m *Article) GetFinalscore() float64 {
-	if m != nil {
-		return m.Finalscore
-	}
-	return 0
-}
-
-func (m *Article) GetComputescore() map[string]float64 {
-	if m != nil {
-		return m.Computescore
-	}
-	return nil
-}
-
-func (m *Article) GetServertag() string {
-	if m != nil {
-		return m.Servertag
-	}
-	return ""
-}
-
-func (m *Article) GetRecommendTimeLimit() int64 {
-	if m != nil {
-		return m.RecommendTimeLimit
-	}
-	return 0
 }
 
 type Stgy struct {
@@ -220,7 +138,6 @@ type Stgy struct {
 	algoStgy   string
 	action     string
 	uniqueid   string
-	channel    string
 	size       int
 	PersonalInfo
 	Filtermap map[string]bool
@@ -228,13 +145,6 @@ type Stgy struct {
 	FixedPos  map[int][]string
 }
 
-func (s Stgy) GetUniqueid() string {
-	return s.uniqueid
-}
-func (s *Stgy) SetUniqueid(u string) {
-	s.uniqueid = u
-	return
-}
 func (s Stgy) GetUserId() string {
 	return s.userId
 }
@@ -277,72 +187,39 @@ func (s *Stgy) SetSize(st int) {
 	s.size = st
 	return
 }
-func (s Stgy) GetChannel() string {
-	return s.channel
+
+type ArticleList []Article
+type Article struct {
+	pb.Article
 }
-func (s *Stgy) SetChannel(st string) {
-	s.channel = st
+
+/*
+func (s *Article) SetId(v string) {
+	s.id = v
 	return
 }
-
-type PersonalInfo struct {
-	Showlist         []string
-	Clicklist        []string
-	Quick_showlist   []string
-	Nfblist          []string
-	History_usertag  map[string]float64
-	Realtime_usertag map[string]float64
-}
-
-func (p *PersonalInfo) SetHistoryUsertag(hu map[string]string) {
-	p.History_usertag = make(map[string]float64)
-	for k, v := range hu {
-		var val float64
-		fmt.Sscanf(v, "%f", &val)
-		p.History_usertag[k] = val
-	}
+func (s *Article) SetTags(v []string) {
+	s.tags = v
 	return
 }
-
-type Param struct {
-	userId    string `json:"userId"`
-	uuid      string
-	itemSize  string
-	recAction string
-	pageNum   string
-	channel   string
+func (s *Article) SetLargeClass(v string) {
+	s.largeclass = v
+	return
 }
-
-func (p *Param) SetUserId(s string) {
-	p.userId = s
+func (s *Article) SetMediumClass(v string) {
+	s.mediumclass = v
+	return
 }
-func (p Param) GetUserId() string {
-	return p.userId
+func (s *Article) SetSmallClass(v string) {
+	s.smallclass = v
+	return
 }
-func (p *Param) SetUuid(s string) {
-	p.uuid = s
+func (s *Article) SetDatPublish(v string) {
+	s.datpublish = v
+	return
 }
-func (p Param) GetUuid() string {
-	return p.uuid
+func (s *Article) SetVc2Type(v string) {
+	s.vc2type = v
+	return
 }
-func (p *Param) SetItemSize(s string) {
-	p.itemSize = s
-}
-func (p *Param) SetRecAction(s string) {
-	p.recAction = s
-}
-func (p Param) GetRecAction() string {
-	return p.recAction
-}
-func (p *Param) SetPageNum(s string) {
-	p.pageNum = s
-}
-func (p Param) GetPageNum() string {
-	return p.pageNum
-}
-func (p *Param) SetChannel(s string) {
-	p.channel = s
-}
-func (p Param) GetChannel() string {
-	return p.channel
-}
+*/

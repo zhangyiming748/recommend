@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package protoFile;
+import "article.proto";
+
+option go_package="protoFile";
+
+//请求体
+message UserCfRequest{
+    string method = 1;
+    map<string , string> param = 2;
+}
+
+//返回数据
+message UserCfReply{
+    // Status 枚举状态
+    enum Status {
+        OK = 0;
+        FAIL = 1;
+    }
+    Status code = 3;
+    string message = 4;
+    repeated Article data = 5;
+}
+
+
+
+
+message RecReqeust{
+    string uid = 1;
+    int32 K = 2;
+    int32 N = 3;
+    map<string, bool> filterMap = 4;
+}
+
+message RecReply{
+    // Status 枚举状态
+    enum Status {
+        OK = 0;
+        FAIL = 1;
+    }
+    Status code = 5;
+    string message = 6;
+    map<string , string> data = 7;
+}
+
+
+//定义UserCf服务
+service UserCfService{
+    rpc Communication(UserCfRequest) returns (UserCfReply) {};
+    rpc Recommend(RecReqeust)  returns(RecReply){}
+}

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package protoFile;
+
+option go_package="protoFile";
+
+//article
+message Article{
+        string id = 1;
+        repeated string tags = 2;
+        string largeclass = 3;
+        string mediumclass = 4;
+        string smallclass = 5;
+        string datpublis = 6;
+        string vc2type = 7;
+        double finalscore = 8;
+        map<string,double> computescore = 9;
+        string servertag = 10;
+        int64 recommendTimeLimit =  11;
+}

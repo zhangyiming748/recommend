@@ -1,18 +1,18 @@
 package storage
 
 import (
+	. "../util"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
-	. "recommend/util"
 	"strconv"
 	"strings"
 	"time"
 )
 
 type Prefix struct {
-	prefix      string
-	isCacheable bool
-	cacheMin    time.Duration
+	Prefix      string
+	IsCacheable bool
+	CacheMin    time.Duration
 }
 
 type RedisInstance struct {
@@ -33,7 +33,7 @@ func RedisInit(prefixs []Prefix, redis_url, redis_usepipe string) RedisInstance 
 
 	r.keyPrefix = make(map[string]Prefix)
 	for _, p := range prefixs {
-		r.keyPrefix[p.prefix] = p
+		r.keyPrefix[p.Prefix] = p
 	}
 
 	redis_connects := strings.Split(redis_url, "?")
@@ -105,7 +105,7 @@ func (r RedisInstance) redisDo(cmd string, keys ...interface{}) (v interface{}, 
 func (r RedisInstance) isCacheable(keyPrefix string) (bool, time.Duration) {
 	p, ok := r.keyPrefix[keyPrefix]
 	if ok {
-		return p.isCacheable, p.cacheMin
+		return p.IsCacheable, p.CacheMin
 	}
 	return false, 0
 }

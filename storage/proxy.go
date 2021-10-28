@@ -1,10 +1,10 @@
 package storage
 
 import (
+	. "../util"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"math/rand"
-	. "recommend/util"
 	"time"
 )
 
@@ -48,37 +48,30 @@ func (t *Proxy) proxy_init(size int) {
 }
 
 func (t *Proxy) consumer(i int) {
-	robustconsumer := func() {
-		defer PanicRecover(PanicPosition())
-		cmdArray := make([]entry, 0)
-		for {
-			select {
-			case rcmd := <-t.entryChan[i]:
-				cmdArray = append(cmdArray, rcmd)
-				if len(cmdArray) > MaxCmds {
-					err := t.pipeline(cmdArray)
-					if err != nil {
-						Errorln("len(cmdArray):", len(cmdArray), "\terr:", err)
-					}
-					cmdArray = make([]entry, 0)
+	cmdArray := make([]entry, 0)
+	for {
+		select {
+		case rcmd := <-t.entryChan[i]:
+			cmdArray = append(cmdArray, rcmd)
+			if len(cmdArray) > MaxCmds {
+				err := t.pipeline(cmdArray)
+				if err != nil {
+					Errorln("len(cmdArray):", len(cmdArray), "\terr:", err)
 				}
-			default:
-				if len(cmdArray) == 0 {
-					time.Sleep(littleWhile * time.Millisecond)
-					continue
-				} else {
-					err := t.pipeline(cmdArray)
-					if err != nil {
-						Errorln("len(cmdArray):", len(cmdArray), "\terr:", err)
-					}
-					cmdArray = make([]entry, 0)
+				cmdArray = make([]entry, 0)
+			}
+		default:
+			if len(cmdArray) == 0 {
+				time.Sleep(littleWhile * time.Millisecond)
+				continue
+			} else {
+				err := t.pipeline(cmdArray)
+				if err != nil {
+					Errorln("len(cmdArray):", len(cmdArray), "\terr:", err)
 				}
+				cmdArray = make([]entry, 0)
 			}
 		}
-	}
-	for {
-		robustconsumer()
-		Errorln("should never be here...")
 	}
 }
 
@@ -87,7 +80,7 @@ func (t *Proxy) producer(cmd string, keys ...interface{}) (interface{}, error) {
 		cmd: cmd,
 		key: keys,
 	}
-	//Debugln("producer:", rc)
+	Debugln("producer:", rc)
 	ch := make(chan rValue)
 	e := entry{
 		rcmd:      rc,
@@ -104,13 +97,13 @@ func (t *Proxy) pipeline(entrys []entry) (err error) {
 			err = fmt.Errorf("%v", e)
 		}
 	}()
-	//Debugln(t.pool.ActiveCount())
+	Debugln(t.pool.ActiveCount())
 	c := t.pool.Get()
 	defer c.Close()
-	//Debugln("debug pipeline size", len(entrys))
+	Debugln("debug pipeline size", len(entrys))
 	for _, ent := range entrys {
 		c.Send(ent.rcmd.cmd, ent.rcmd.key...)
-		//Debugln("c.Send()", ent.rcmd.cmd, ent.rcmd.key)
+		Debugln("c.Send()", ent.rcmd.cmd, ent.rcmd.key)
 	}
 	c.Flush()
 	for _, ent := range entrys {

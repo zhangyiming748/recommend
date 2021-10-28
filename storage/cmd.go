@@ -1,9 +1,9 @@
 package storage
 
 import (
+	. "../util"
 	"fmt"
 	"github.com/garyburd/redigo/redis"
-	. "recommend/util"
 )
 
 func (r RedisInstance) Exists(pat string) (res bool, err error) {
@@ -87,7 +87,7 @@ func (r RedisInstance) hgetAll(key string) (res map[string]string, err error) {
 		}
 	}()
 	res, err = redis.StringMap(r.do("HGETALL", key))
-	//Debugln("hgetAll", key, res, err)
+	Debugln("hgetAll", key, res, err)
 	return
 }
 
